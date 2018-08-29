@@ -29,6 +29,7 @@ public class PlayerController : NetworkBehaviour
 		var networkIdentity = go.GetComponent<NetworkIdentity>();
 		var otherOwner = networkIdentity.clientAuthorityOwner;
 		Debug.Log("got request to seize authority for " + go.name + " which is currently held by " + otherOwner);
+		RpcSetKinematic(go, true);
 		if (otherOwner == player.connectionToClient)
 		{
 			return;
@@ -41,15 +42,14 @@ public class PlayerController : NetworkBehaviour
 			}
 			networkIdentity.AssignClientAuthority(player.connectionToClient);
 		}
-		RpcSetKinematic(go, true);
 	}
 
 	[Command]
 	void CmdDrop(GameObject go, NetworkIdentity player)
 	{
 		Debug.Log("server got request to drop " + go.name);
-		var networkIdentity = go.GetComponent<NetworkIdentity>();
-		networkIdentity.RemoveClientAuthority(player.connectionToClient);
+		//var networkIdentity = go.GetComponent<NetworkIdentity>();
+		//networkIdentity.RemoveClientAuthority(player.connectionToClient);
 		RpcSetKinematic(go, false);
 	}
 
@@ -69,6 +69,8 @@ public class PlayerController : NetworkBehaviour
 				CmdPickup(hit.collider.gameObject, playerID);
 				holding = true;
 				currentRB = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+				currentRB.isKinematic = true;
+				currentRB.velocity = Vector2.zero;
 			}
 		}
 		else if (Input.GetMouseButton(0) && holding)
