@@ -22,10 +22,11 @@ GameObject:
   - component: {fileID: 212413847561686918}
   - component: {fileID: 50088905024735410}
   - component: {fileID: 61464139649782260}
-  - component: {fileID: 114952543146903526}
+  - component: {fileID: 114311527424740572}
+  - component: {fileID: 114782300885755852}
   m_Layer: 0
   m_Name: WoodCrate_D
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,7 +89,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.56, y: 2.56}
   m_EdgeRadius: 0
---- !u!114 &114952543146903526
+--- !u!114 &114311527424740572
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,9 +97,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 1670776760833678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90da625f8499849d3a62438648614a5c, type: 3}
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_TransformSyncMode: 2
+  m_SendInterval: 0.033333335
+  m_SyncRotationAxis: 3
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114782300885755852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1670776760833678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 76
+    i1: 132
+    i2: 46
+    i3: 121
+    i4: 3
+    i5: 207
+    i6: 116
+    i7: 161
+    i8: 88
+    i9: 203
+    i10: 247
+    i11: 204
+    i12: 35
+    i13: 134
+    i14: 215
+    i15: 225
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!212 &212413847561686918
 SpriteRenderer:
   m_ObjectHideFlags: 1
