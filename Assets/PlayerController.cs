@@ -11,6 +11,17 @@ public class PlayerController : NetworkBehaviour
 	private Vector2 lastPos;
 	private int throwSpeed = 1000;
 
+	[ClientRpc]
+	void RpcSetKinematic(GameObject gameObject, bool kinematic)
+	{
+		var rb = gameObject.GetComponent<Rigidbody2D>();
+		rb.isKinematic = kinematic;
+		if (kinematic)
+		{
+			rb.velocity = Vector2.zero;
+		}
+	}
+
 	[Command]
 	void CmdPickup(GameObject go, NetworkIdentity player)
 	{
@@ -30,6 +41,7 @@ public class PlayerController : NetworkBehaviour
 			}
 			networkIdentity.AssignClientAuthority(player.connectionToClient);
 		}
+		RpcSetKinematic(go, true);
 	}
 
 	[Command]
@@ -38,6 +50,7 @@ public class PlayerController : NetworkBehaviour
 		Debug.Log("server got request to drop " + go.name);
 		var networkIdentity = go.GetComponent<NetworkIdentity>();
 		networkIdentity.RemoveClientAuthority(player.connectionToClient);
+		RpcSetKinematic(go, false);
 	}
 
 	// Update is called once per frame
@@ -56,8 +69,6 @@ public class PlayerController : NetworkBehaviour
 				CmdPickup(hit.collider.gameObject, playerID);
 				holding = true;
 				currentRB = hit.collider.gameObject.GetComponent<Rigidbody2D>();
-				currentRB.isKinematic = true;
-				currentRB.velocity = Vector2.zero;
 			}
 		}
 		else if (Input.GetMouseButton(0) && holding)
@@ -72,7 +83,6 @@ public class PlayerController : NetworkBehaviour
 		else if (Input.GetMouseButtonUp(0) && holding)
 		{
 			Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			currentRB.isKinematic = false;
 			var direction = cursorPosition - lastPos;
 			currentRB.AddForce(direction * throwSpeed);
 			var playerID = gameObject.GetComponent<NetworkIdentity>();
