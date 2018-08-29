@@ -14,6 +14,7 @@ public class PlayerController : NetworkBehaviour
 	[ClientRpc]
 	void RpcSetKinematic(GameObject gameObject, bool kinematic)
 	{
+		Debug.Log("Server setting kinematic for " + gameObject.name + " to " + kinematic);
 		var rb = gameObject.GetComponent<Rigidbody2D>();
 		rb.isKinematic = kinematic;
 		if (kinematic)
@@ -25,7 +26,6 @@ public class PlayerController : NetworkBehaviour
 	[Command]
 	void CmdPickup(GameObject go, NetworkIdentity player)
 	{
-		Debug.Log("server got request to pickup " + go.name);
 		var networkIdentity = go.GetComponent<NetworkIdentity>();
 		var otherOwner = networkIdentity.clientAuthorityOwner;
 		Debug.Log("got request to seize authority for " + go.name + " which is currently held by " + otherOwner);
@@ -84,6 +84,8 @@ public class PlayerController : NetworkBehaviour
 		{
 			Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			var direction = cursorPosition - lastPos;
+			Debug.Log("release - applying throw force to " + direction);
+			currentRB.isKinematic = false;
 			currentRB.AddForce(direction * throwSpeed);
 			var playerID = gameObject.GetComponent<NetworkIdentity>();
 			CmdDrop(currentRB.gameObject, playerID);
