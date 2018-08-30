@@ -10,6 +10,7 @@ public class PlayerController : NetworkBehaviour
 	private bool holding = false;
 	private Vector2 lastPos;
 	private int throwSpeed = 1000;
+	private CircleCollider2D finger;
 
 	[ClientRpc]
 	void RpcSetKinematic(GameObject gameObject, bool kinematic)
@@ -53,6 +54,11 @@ public class PlayerController : NetworkBehaviour
 		RpcSetKinematic(go, false);
 	}
 
+	void Start()
+	{
+		finger = GetComponent<CircleCollider2D>();
+	}
+
 	// Update is called once per frame
 	void Update()
 	{
@@ -72,26 +78,45 @@ public class PlayerController : NetworkBehaviour
 				currentRB.isKinematic = true;
 				currentRB.velocity = Vector2.zero;
 			}
+			else
+			{
+				finger.enabled = true;
+				finger.transform.position = cursorPosition;
+			}
 		}
-		else if (Input.GetMouseButton(0) && holding)
+		else if (Input.GetMouseButton(0))
 		{
 			Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			if (cursorPosition != lastPos)
 			{
-				currentRB.position = cursorPosition;
+				if (holding)
+				{
+					currentRB.position = cursorPosition;
+				}
+				else
+				{
+					finger.transform.position = cursorPosition;
+				}
 				lastPos = cursorPosition;
 			}
 		}
-		else if (Input.GetMouseButtonUp(0) && holding)
+		else if (Input.GetMouseButtonUp(0))
 		{
-			Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			var direction = cursorPosition - lastPos;
-			Debug.Log("release - applying throw force to " + direction);
-			currentRB.isKinematic = false;
-			currentRB.AddForce(direction * throwSpeed);
-			var playerID = gameObject.GetComponent<NetworkIdentity>();
-			CmdDrop(currentRB.gameObject, playerID);
-			holding = false;
+			if (holding)
+			{
+				Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				var direction = cursorPosition - lastPos;
+				Debug.Log("release - applying throw force to " + direction);
+				currentRB.isKinematic = false;
+				currentRB.AddForce(direction * throwSpeed);
+				var playerID = gameObject.GetComponent<NetworkIdentity>();
+				CmdDrop(currentRB.gameObject, playerID);
+				holding = false;
+			}
+			else
+			{
+				finger.enabled = false;
+			}
 		}
 	}
 }
