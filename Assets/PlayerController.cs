@@ -10,7 +10,6 @@ public class PlayerController : NetworkBehaviour
 	private bool holding = false;
 	private Vector2 lastPos;
 	private int throwSpeed = 1000;
-	private CircleCollider2D finger;
 
 	[ClientRpc]
 	void RpcSetKinematic(GameObject gameObject, bool kinematic)
@@ -54,11 +53,6 @@ public class PlayerController : NetworkBehaviour
 		RpcSetKinematic(go, false);
 	}
 
-	void Start()
-	{
-		finger = GetComponent<CircleCollider2D>();
-	}
-
 	// Update is called once per frame
 	void Update()
 	{
@@ -80,8 +74,7 @@ public class PlayerController : NetworkBehaviour
 			}
 			else
 			{
-				finger.enabled = true;
-				finger.transform.position = cursorPosition;
+				transform.position = cursorPosition;
 			}
 		}
 		else if (Input.GetMouseButton(0))
@@ -95,7 +88,7 @@ public class PlayerController : NetworkBehaviour
 				}
 				else
 				{
-					finger.transform.position = cursorPosition;
+					transform.position = cursorPosition;
 				}
 				lastPos = cursorPosition;
 			}
@@ -115,7 +108,7 @@ public class PlayerController : NetworkBehaviour
 			}
 			else
 			{
-				finger.enabled = false;
+				transform.position = Vector2.one * 20;
 			}
 		}
 	}

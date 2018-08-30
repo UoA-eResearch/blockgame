@@ -11,7 +11,7 @@ public class NetworkManagerOverrides : NetworkManager
 
 	void Start()
 	{
-		if (Application.platform == RuntimePlatform.LinuxPlayer)
+		if (SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null)
 		{
 			Debug.Log("Starting server");
 			useWebSockets = true;
@@ -22,6 +22,7 @@ public class NetworkManagerOverrides : NetworkManager
 		{
 			Debug.Log("Starting client");
 			useWebSockets = true;
+			networkAddress = "r.nectar.auckland.ac.nz";
 			networkPort = 8080;
 			GetComponent<NetworkManagerHUD>().enabled = false;
 			StartClient();

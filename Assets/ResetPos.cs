@@ -14,7 +14,7 @@ public class ResetPos : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (transform.position.y < -20)
+		if (transform.position.y < -20 || transform.position.y > 20)
 		{
 			transform.position = Vector2.zero;
 		}
