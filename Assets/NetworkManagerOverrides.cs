@@ -14,11 +14,16 @@ public class NetworkManagerOverrides : NetworkManager
 		if (Application.platform == RuntimePlatform.LinuxPlayer)
 		{
 			Debug.Log("Starting server");
+			useWebSockets = true;
+			networkPort = 8080;
 			StartServer();
 		}
-		else
+		else if (Application.platform == RuntimePlatform.WebGLPlayer)
 		{
 			Debug.Log("Starting client");
+			useWebSockets = true;
+			networkPort = 8080;
+			GetComponent<NetworkManagerHUD>().enabled = false;
 			StartClient();
 		}
 	}

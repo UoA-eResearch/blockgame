@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 61464139649782260}
   - component: {fileID: 114311527424740572}
   - component: {fileID: 114782300885755852}
+  - component: {fileID: 114880320323970552}
   m_Layer: 0
   m_Name: WoodCrate_D
   m_TagString: Throwable
@@ -38,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1670776760833678}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.0581717, y: -0.09919236, z: 0.058176715}
+  m_LocalPosition: {x: 2.59, y: -0.76, z: 0.058176715}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 0}
@@ -142,6 +143,17 @@ MonoBehaviour:
     i15: 225
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114880320323970552
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1670776760833678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0193a6eac4b34a499fae8ce25cc7d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212413847561686918
 SpriteRenderer:
   m_ObjectHideFlags: 1
