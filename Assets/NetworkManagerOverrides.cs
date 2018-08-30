@@ -9,6 +9,20 @@ public class NetworkManagerOverrides : NetworkManager
 
 	public Text m_Text;
 
+	void Start()
+	{
+		if (Application.platform == RuntimePlatform.LinuxPlayer)
+		{
+			Debug.Log("Starting server");
+			StartServer();
+		}
+		else
+		{
+			Debug.Log("Starting client");
+			StartClient();
+		}
+	}
+
 	void ClearText()
 	{
 		m_Text.text = "";
